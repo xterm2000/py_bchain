@@ -1,0 +1,146 @@
+swagger: '2.0'
+info:
+  description: >- 
+    this is sample blockchain server </br>
+    </br>
+    </br>
+    </br>
+  version: 0.0.1
+  title: Blockchain Server
+  contact:
+    name: Mitek
+    email: babajan@hotmail.com
+    
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+
+tags:
+- name: client
+  description: Clients info
+  externalDocs:
+    description: information about clients 
+    url: 'http://oxyehho.com'
+- name: server
+  description: Coin server
+  externalDocs:
+    description: add transactions
+    url: 'http://oxyehho.com'   
+
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /xterm2000/blockchain-server/0.0.1
+  
+# host: localhost       
+# basePath: /openapi/v1
+
+schemes:
+- https
+- http
+paths:
+  /client/findByName:
+    get:
+      tags:
+      - client
+      summary: find client by name
+      description: client will be found by name
+      operationId: findClientByName
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: name
+        in: query
+        description: names for filter
+        required: true
+        type: string
+      responses:
+        '200':
+          description: success
+          schema:
+            $ref: '#/definitions/Client'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/Error'    # <-----
+        404:
+          description: Not found
+          schema:
+            $ref: '#/definitions/UnauthorizedError'    # <-----
+      security:
+      - basicAuth: []
+  /blocks/addblock:
+    post:
+      tags:
+       - block
+      responses:
+        200:
+          description: Ok
+  /ping:
+    get:
+      summary: test server 
+      description: simple ping is sent 
+      responses:
+        200:
+          description: OK
+#######################
+securityDefinitions:
+  server_auth:
+    type: oauth2
+    authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
+    flow: implicit
+    scopes:
+      write:server: modify pets in your account
+      read:server: read your clients
+  api_key:
+    type: apiKey
+    name: api_key
+    in: header
+  basicAuth:
+    type: basic
+definitions:
+  Client:
+    type: object
+    properties:
+      name:
+        type: string
+        example: "Alice"
+      id:
+        type: integer
+        format: int32
+        example: "123"
+  ApiResponse:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      type:
+        type: string
+      message:
+        type: string
+  Error:
+    type: object
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+    required:
+      - code
+      - message
+  UnauthorizedError:
+    description: error message for unathorized
+    type: object
+    properties: 
+      message:
+        type: string
+        example: "Unathorized."
+    
+externalDocs:
+  description: Amanita Experience
+  url: 'http://theamanitaexperience.com'
+  
