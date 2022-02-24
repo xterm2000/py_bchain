@@ -39,7 +39,7 @@ def main():
     bob = Client("Bob")
     charlie = Client("Charlie")
     david = Client("David")
-    
+    breakpoint()
     
     g = Client("GENESIS")
     t = Transaction(g,alice,100)
